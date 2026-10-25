@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Complaint | Panchayat Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
+            margin: 0;
+            padding: 25px 15px;
+            color: #263238;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 25px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.09);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e6f4ed;
+            border-radius: 50%;
+            font-size: 30px;
+        }
+
+        h1 {
+            color: #087f5b;
+            margin: 0 0 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 9px;
+            font-size: 16px;
+        }
+
+        input {
+            border: 1px solid #cbd5e1;
+            outline: none;
+            margin-bottom: 12px;
+        }
+
+        input:focus {
+            border-color: #087f5b;
+            box-shadow: 0 0 0 3px #087f5b18;
+        }
+
+        button {
+            background: linear-gradient(135deg, #087f5b, #0b7285);
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+
+        .error {
+            background: #fff0f0;
+            color: #b42318;
+            border: 1px solid #ffd2d2;
+            border-radius: 9px;
+            padding: 12px;
+            margin-top: 18px;
+        }
+
+        .result {
+            margin-top: 28px;
+            border: 1px solid #e2e8f0;
+            border-radius: 13px;
+            overflow: hidden;
+        }
+
+        .result-heading {
+            background: #087f5b;
+            color: white;
+            padding: 16px 20px;
+        }
+
+        .result-heading h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .details {
+            padding: 18px 20px 5px;
+        }
+
+        .details p {
+            margin: 0 0 14px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .status-tracker {
+            margin: 15px 18px 20px;
+            padding: 20px 12px;
+            border-radius: 12px;
+            background: #f8fafc;
+        }
+
+        .status-tracker h3 {
+            margin: 0;
+            text-align: center;
+            color: #334155;
+        }
+
+        .status-steps {
+            display: flex;
+            align-items: flex-start;
+            margin: 28px 0 22px;
+        }
+
+        .status-step {
+            width: 28%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 9px;
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .step-circle {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #64748b;
+            font-weight: bold;
+            border: 3px solid #e2e8f0;
+        }
+
+        .status-step.active {
+            color: #087f5b;
+            font-weight: bold;
+        }
+
+        .status-step.active .step-circle {
+            background: #087f5b;
+            border-color: #ccebdc;
+            color: #ffffff;
+        }
+
+        .status-line {
+            height: 4px;
+            flex: 1;
+            margin: 17px 3px 0;
+            background: #e2e8f0;
+            border-radius: 5px;
+        }
+
+        .status-line.active {
+            background: #087f5b;
+        }
+
+        .current-status {
+            text-align: center;
+            padding: 13px 10px;
+            background: #e6f4ed;
+            color: #087f5b;
+            border-radius: 9px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .registered {
+            color: #64748b;
+            font-size: 13px;
+            padding: 0 20px 18px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .footer a {
+            color: #087f5b;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 22px 16px;
+                margin: 10px auto;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .status-tracker {
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 18px 7px;
+            }
+
+            .status-step {
+                font-size: 10px;
+            }
+
+            .step-circle {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+
+            .status-line {
+                margin-top: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+
+        <div class="header">
+            <div class="header-icon">🔎</div>
+            <h1>Track Your Complaint</h1>
+            <p class="subtitle">
+                Gram Panchayat Digital Complaint Portal<br>
+                Enter your Complaint ID to check the latest status.
+            </p>
+        </div>
+
+        <form method="POST" action="/track">
+            <label for="complaint_id">Complaint ID</label>
+            <input
+                type="number"
+                id="complaint_id"
+                name="complaint_id"
+                min="1"
+                required
+                placeholder="e.g. 1"
+            >
+            <button type="submit">Track My Complaint →</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if complaint %}
+            <section class="result">
+
+                <div class="result-heading">
+                    <h2>📋 Complaint Details</h2>
+                </div>
+
+                <div class="details">
+                    <p><strong>Complaint ID:</strong> {{ complaint.id }}</p>
+                    <p><strong>Name:</strong> {{ complaint.name }}</p>
+                    <p><strong>Category:</strong> {{ complaint.category }}</p>
+                    <p><strong>Location:</strong> {{ complaint.location }}</p>
+                    <p><strong>Complaint:</strong> {{ complaint.complaint }}</p>
+                </div>
+
+                {% set current_status = (complaint.status or 'Pending')|trim|lower %}
+
+                <div class="status-tracker">
+                    <h3>Complaint Progress</h3>
+
+                    <div class="status-steps">
+
+                        <div class="status-step
+                            {% if current_status in ['pending', 'in progress', 'in_progress', 'resolved'] %}
+                                active
+                            {% endif %}">
+                            <span class="step-circle">1</span>
+                            <span>Pending</span>
+                        </div>
+
+                        <div class="status-line
+                            {% if current_status in ['in progress', 'in_progress', 'resolved'] %}
+                                active
+                            {% endif %}"></div>
+
+                        <div class="status-step
+                            {% if current_status in ['in progress', 'in_progress', 'resolved'] %}
+                                active
+                            {% endif %}">
+                            <span class="step-circle">2</span>
+                            <span>In Progress</span>
+                        </div>
+
+                        <div class="status-line
+                            {% if current_status == 'resolved' %}
+                                active
+                            {% endif %}"></div>
+
+                        <div class="status-step
+                            {% if current_status == 'resolved' %}
+                                active
+                            {% endif %}">
+                            <span class="step-circle">3</span>
+                            <span>Resolved</span>
+                        </div>
+
+                    </div>
+
+                    <p class="current-status">
+                        Current Status:
+                        <strong>{{ complaint.status or 'Pending' }}</strong>
+                    </p>
+                </div>
+
+                <p class="registered">
+                    <strong>Registered:</strong> {{ complaint.created_at }}
+                </p>
+
+            </section>
+        {% endif %}
+
+        <div class="footer">
+            <a href="/">← Back to Home</a>
+        </div>
+
+    </main>
+</body>
+</html>

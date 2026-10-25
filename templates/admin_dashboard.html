@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Panchayat Portal</title>
+
+           <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f3f7f5;
+            margin: 0;
+            padding: 26px;
+            color: #23352d;
+        }
+
+        header {
+            background: linear-gradient(135deg, #075e45, #087f8c);
+            color: white;
+            padding: 28px 30px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            box-shadow: 0 8px 24px #087f5b20;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 30px;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            margin: 9px 0 0;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            background: white;
+            color: #087f5b;
+            padding: 12px 20px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #e5f5ed;
+            transform: translateY(-1px);
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 26px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 24px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #163c2a0a;
+            border: 1px solid #e8efeb;
+            border-left: 5px solid #087f5b;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px #163c2a12;
+        }
+
+        .summary-card h3 {
+            margin: 0 0 14px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #64746b;
+        }
+
+        .summary-card .count {
+            font-size: 34px;
+            font-weight: 800;
+            color: #087f5b;
+        }
+
+        .summary-card.pending {
+            border-left-color: #e3a008;
+        }
+
+        .summary-card.pending .count {
+            color: #b77900;
+        }
+
+        .summary-card.progress {
+            border-left-color: #2878d0;
+        }
+
+        .summary-card.progress .count {
+            color: #2878d0;
+        }
+
+        .summary-card.resolved {
+            border-left-color: #219653;
+        }
+
+        .summary-card.resolved .count {
+            color: #219653;
+        }
+
+        .section {
+            background: white;
+            padding: 26px;
+            border: 1px solid #e5ece8;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px #163c2a08;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            color: #087f5b;
+            font-size: 21px;
+        }
+
+        .complaint-status-section {
+            margin-top: 28px;
+            padding-top: 10px;
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #e5ece8;
+            border-radius: 11px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+            background: white;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 14px;
+            border-bottom: 1px solid #e8eeea;
+            vertical-align: middle;
+        }
+
+        th {
+            background: #eaf5ef;
+            color: #245441;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        td {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        tbody tr:hover {
+            background: #f5faf7;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .photo {
+            width: 80px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 9px;
+            border: 1px solid #dce6df;
+            transition: transform 0.2s;
+        }
+
+        .photo:hover {
+            transform: scale(1.04);
+        }
+
+        .no-photo {
+            color: #89948e;
+            font-size: 13px;
+        }
+
+        select, button {
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        select {
+            border: 1px solid #ccd9d1;
+            background: white;
+            margin-bottom: 7px;
+            max-width: 100%;
+            color: #26382e;
+        }
+
+        select:focus,
+        input:focus {
+            outline: 2px solid #087f5b30;
+            border-color: #087f5b !important;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-weight: 700;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .update-btn {
+            background: #087f5b;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            margin-top: 5px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 28px;
+            color: #7b8981;
+            background: #fafcfb;
+            border-radius: 8px;
+        }
+
+        #searchResultMessage {
+            font-weight: 600;
+            color: #087f5b;
+            margin-bottom: 16px;
+        }
+
+        #globalComplaintSearch {
+            width: 100%;
+            padding: 14px 16px !important;
+            margin: 12px 0 18px !important;
+            border: 1px solid #d4dfd8 !important;
+            border-radius: 10px !important;
+            font-size: 15px;
+            background: #fcfefd;
+        }
+
+        tr.search-highlight td {
+            background-color: #fff3bf !important;
+            color: #222 !important;
+            font-weight: bold;
+            border-top: 2px solid #e3a008;
+            border-bottom: 2px solid #e3a008;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 14px;
+            }
+
+            .summary {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            header {
+                padding: 22px;
+            }
+
+            .section {
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 23px;
+            }
+
+            .summary {
+                gap: 10px;
+            }
+
+            .summary-card {
+                padding: 15px;
+            }
+
+            .summary-card h3 {
+                font-size: 12px;
+            }
+
+            .summary-card .count {
+                font-size: 27px;
+            }
+
+            .section {
+                padding: 13px;
+            }
+
+            .section h2 {
+                font-size: 18px;
+            }
+        }
+        
+/* Fixed professional sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(180deg, #075e45, #064b3b);
+    color: white;
+    padding: 28px 16px;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    padding: 0 12px 25px;
+    border-bottom: 1px solid #ffffff30;
+    margin-bottom: 25px;
+}
+
+.sidebar-brand h2 {
+    font-size: 19px;
+    margin: 0 0 8px;
+    color: white;
+}
+
+.sidebar-brand p {
+    font-size: 12px;
+    margin: 0;
+    color: #d5eee3;
+    line-height: 1.5;
+}
+
+.sidebar a {
+    display: block;
+    padding: 13px 14px;
+    margin-bottom: 8px;
+    border-radius: 9px;
+    color: #e4f5ec;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #ffffff20;
+    color: white;
+}
+
+.sidebar .sidebar-logout {
+    margin-top: 25px;
+    border: 1px solid #ffffff55;
+}
+
+.main-content {
+    margin-left: 250px;
+    min-width: 0;
+}
+
+@media (max-width: 900px) {
+    body {
+        padding: 14px;
+        padding-left: 264px;
+    }
+
+    .sidebar {
+        width: 235px;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+        padding-left: 10px;
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 16px;
+        margin-bottom: 18px;
+        border-radius: 14px;
+    }
+
+    .sidebar-brand {
+        padding-bottom: 14px;
+        margin-bottom: 12px;
+    }
+
+    .sidebar a {
+        display: inline-block;
+        margin: 3px;
+        padding: 10px;
+    }
+
+    .sidebar .sidebar-logout {
+        margin-top: 5px;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.badge-pending {
+    background: #fff3cd;
+    color: #946200;
+}
+
+.badge-progress {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.badge-resolved {
+    background: #dcfce7;
+    color: #166534;
+}
+
+
+        </style>
+</head>
+
+<body>
+    
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <h2>🏛️ Panchayat Portal</h2>
+        <p>Administration Panel</p>
+    </div>
+
+    <nav aria-label="Admin navigation">
+        <a href="#dashboard" class="active">🏠 Dashboard</a>
+        <a href="#complaintsSection">📋 All Complaints</a>
+        <a href="#status-1">🟡 Pending</a>
+        <a href="#status-2">🔵 In Progress</a>
+        <a href="#status-3">🟢 Resolved</a>
+        <a href="/admin/logout" class="sidebar-logout">🚪 Logout</a>
+    </nav>
+</aside>
+
+<main class="main-content" id="dashboard">
+
+
+<header>
+    <div>
+        <h1>Admin Dashboard</h1>
+        <p>Gram Panchayat Digital Complaint Portal</p>
+    </div>
+    <a href="/admin/logout" class="logout-btn">Logout</a>
+</header>
+
+{% set ns = namespace(pending=0, progress=0, resolved=0) %}
+
+{% for item in complaints %}
+    {% if item.status == 'Pending' %}
+        {% set ns.pending = ns.pending + 1 %}
+    {% elif item.status == 'In Progress' %}
+        {% set ns.progress = ns.progress + 1 %}
+    {% elif item.status == 'Resolved' %}
+        {% set ns.resolved = ns.resolved + 1 %}
+    {% endif %}
+{% endfor %}
+
+<div class="summary">
+    <div class="summary-card">
+        <h3>Total Complaints</h3>
+        <div class="count">{{ complaints|length }}</div>
+    </div>
+
+    <div class="summary-card pending">
+        <h3>Pending</h3>
+        <div class="count">{{ ns.pending }}</div>
+    </div>
+
+    <div class="summary-card progress">
+        <h3>In Progress</h3>
+        <div class="count">{{ ns.progress }}</div>
+    </div>
+
+    <div class="summary-card resolved">
+        <h3>Resolved</h3>
+        <div class="count">{{ ns.resolved }}</div>
+    </div>
+</div>
+
+<section class="section" id="complaintsSection">
+
+    <h2>📋 All Complaints</h2>
+
+    <input
+        type="text"
+        id="globalComplaintSearch"
+        placeholder="🔍 Search ID, name, phone, location or category..."
+        oninput="searchAllComplaints()"
+        style="width:100%; padding:12px; margin:12px 0 18px; border:1px solid #ccd5cf; border-radius:8px;"
+    >
+
+    <p id="searchResultMessage" aria-live="polite"></p>
+
+    {% for status_name in ['Pending', 'In Progress', 'Resolved'] %}
+
+    <div class="complaint-status-section"
+         id="status-{{ loop.index }}"
+         data-status="{{ status_name }}">
+
+        <h2>
+            {% if status_name == 'Pending' %}
+                🟡 Pending Complaints
+            {% elif status_name == 'In Progress' %}
+                🔵 In Progress Complaints
+            {% else %}
+                🟢 Resolved Complaints
+            {% endif %}
+        </h2>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Citizen</th>
+                        <th>Phone</th>
+                        <th>Category</th>
+                        <th>Location</th>
+                        <th>Complaint</th>
+                        <th>Photo</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% set ns_section = namespace(found=false) %}
+
+                    {% for item in complaints %}
+                        {% if item.status == status_name %}
+                            {% set ns_section.found = true %}
+
+                            <tr class="complaint-row">
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.phone }}</td>
+                                <td>{{ item.category }}</td>
+                                <td>{{ item.location }}</td>
+                                <td>{{ item.complaint }}</td>
+
+                                <td>
+                                    {% if item.photo_filename %}
+                                        <a
+                                            href="{{ url_for('static', filename='uploads/' ~ item.photo_filename) }}"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <img
+                                                class="photo"
+                                                src="{{ url_for('static', filename='uploads/' ~ item.photo_filename) }}"
+                                                alt="Complaint photo"
+                                                loading="lazy"
+                                            >
+                                        </a>
+                                    {% else %}
+                                        <span class="no-photo">No photo</span>
+                                    {% endif %}
+                                </td>
+
+                                
+<td>
+    <span class="status-badge
+        {% if item.status == 'Pending' %}badge-pending
+        {% elif item.status == 'In Progress' %}badge-progress
+        {% elif item.status == 'Resolved' %}badge-resolved
+        {% endif %}">
+        {{ item.status }}
+    </span>
+</td>
+
+
+                                <td>
+                                    <form method="POST"
+                                          action="/admin/update/{{ item.id }}">
+                                        <select name="status" required>
+                                            <option value="Pending"
+                                                {% if item.status == 'Pending' %}selected{% endif %}>
+                                                Pending
+                                            </option>
+
+                                            <option value="In Progress"
+                                                {% if item.status == 'In Progress' %}selected{% endif %}>
+                                                In Progress
+                                            </option>
+
+                                            <option value="Resolved"
+                                                {% if item.status == 'Resolved' %}selected{% endif %}>
+                                                Resolved
+                                            </option>
+                                        </select>
+
+                                        <button class="update-btn" type="submit">
+                                            Update
+                                        </button>
+                                    </form>
+
+                                    <form method="POST"
+                                          action="/admin/delete/{{ item.id }}"
+                                          onsubmit="return confirm('Delete complaint #{{ item.id }} permanently?');">
+                                        <button class="delete-btn" type="submit">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if not ns_section.found %}
+                        <tr class="empty-row">
+                            <td colspan="9" class="empty">
+                                No {{ status_name }} complaints.
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% endfor %}
+
+</section>
+</main>
+
+<script>
+
+function searchAllComplaints() {
+    const input = document.getElementById("globalComplaintSearch");
+    const filter = input.value.trim().toLowerCase();
+
+    document.querySelectorAll(".complaint-status-section").forEach(function(section) {
+        const rows = section.querySelectorAll("tbody tr");
+        let visibleCount = 0;
+
+        rows.forEach(function(row) {
+const complaintId = row.querySelector("td")?.innerText.trim().toLowerCase() || "";
+const matches = filter === "" || row.innerText.toLowerCase().includes(filter);
+            row.hidden = !matches;
+          row.classList.toggle(
+    "search-highlight",
+    filter !== "" && complaintId === filter
+);
+            if (matches) visibleCount++;
+        });
+
+        section.hidden = filter !== "" && visibleCount === 0;
+    });
+}
+
+</script>
+
+</body>
+</html>

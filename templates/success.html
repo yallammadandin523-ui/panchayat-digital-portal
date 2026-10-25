@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Registered</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0fdf4;
+            text-align: center;
+            padding: 60px 15px;
+        }
+        .card {
+            background: white;
+            max-width: 450px;
+            margin: auto;
+            padding: 35px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #0002;
+        }
+        h1 { color: #15803d; }
+        .id { font-size: 24px; font-weight: bold; color: #087f5b; }
+        a {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 18px;
+            background: #087f5b;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>✅ Complaint Registered!</h1>
+        <p>Your complaint has been submitted successfully.</p>
+        <p>Your Complaint ID:</p>
+        <div class="id">{{ complaint_id }}</div>
+        <p>Please save this ID for future reference.</p>
+        <a href="/track">Track Complaint</a>
+        <a href="/">Home</a>
+    </div>
+</body>
+</html>

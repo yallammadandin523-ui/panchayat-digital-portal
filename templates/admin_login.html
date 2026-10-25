@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Panchayat Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef6f1;
+            margin: 0;
+            padding: 30px 15px;
+        }
+        .login-box {
+            max-width: 400px;
+            margin: 60px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px #00000015;
+        }
+        h1 { text-align: center; color: #087f5b; }
+        label { display: block; margin-top: 16px; }
+        input, button {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 7px;
+            font-size: 16px;
+        }
+        input { border: 1px solid #ccc; }
+        button {
+            background: #087f5b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 22px;
+        }
+        .error { color: #c62828; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h1>Admin Login</h1>
+        <p style="text-align:center">Panchayat Digital Portal</p>
+
+        <form method="POST" action="/admin">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

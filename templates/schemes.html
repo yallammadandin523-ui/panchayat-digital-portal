@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Schemes | Panchayat Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f8f6;
+            color: #24332d;
+        }
+
+        header {
+            background: linear-gradient(135deg, #087f5b, #0b7285);
+            color: white;
+            padding: 32px 18px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        header p {
+            margin: 8px 0;
+        }
+
+        .language-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        button, a {
+            cursor: pointer;
+        }
+
+        .language-bar button {
+            border: 1px solid white;
+            background: transparent;
+            color: white;
+            padding: 9px 18px;
+            border-radius: 20px;
+        }
+
+        .language-bar button.active {
+            background: white;
+            color: #087f5b;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1150px;
+            margin: 25px auto;
+        }
+
+        .intro {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 12px #0000000c;
+        }
+
+        .search-area {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5d0;
+            border-radius: 8px;
+            background: white;
+            font-size: 15px;
+        }
+
+        .section-title {
+            margin: 30px 0 15px;
+            color: #087f5b;
+        }
+
+        .scheme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+            gap: 18px;
+        }
+
+        .scheme-card {
+            background: white;
+            border-radius: 13px;
+            padding: 20px;
+            border: 1px solid #e0e9e4;
+            box-shadow: 0 3px 12px #00000008;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .scheme-card h3 {
+            margin: 0;
+            color: #087f5b;
+        }
+
+        .category-tag {
+            display: inline-block;
+            align-self: flex-start;
+            background: #e4f5ed;
+            color: #087f5b;
+            padding: 5px 9px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        .scheme-card p {
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .scheme-card .details {
+            font-size: 14px;
+            color: #47564e;
+        }
+
+        .btn {
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            padding: 11px 14px;
+            border-radius: 7px;
+            font-weight: bold;
+            background: #087f5b;
+            color: white;
+            margin-top: auto;
+        }
+
+        .btn.secondary {
+            background: #e8f3ee;
+            color: #087f5b;
+            border: 1px solid #b8decc;
+        }
+
+        .official-box {
+            margin-top: 28px;
+            padding: 24px;
+            border-radius: 14px;
+            background: #e7f5ee;
+            text-align: center;
+        }
+
+        .official-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .no-results {
+            display: none;
+            padding: 22px;
+            background: white;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .notice {
+            margin-top: 22px;
+            background: #fff8df;
+            border-left: 4px solid #e6a700;
+            padding: 15px;
+            line-height: 1.6;
+            border-radius: 6px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #66756d;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 650px) {
+            .search-area {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1 data-en="Government Scheme Awareness"
+        data-kn="ಸರ್ಕಾರಿ ಯೋಜನೆಗಳ ಅರಿವು">
+        Government Scheme Awareness
+    </h1>
+
+    <p data-en="Discover government schemes and public welfare services"
+       data-kn="ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು ಮತ್ತು ಜನಕಲ್ಯಾಣ ಸೇವೆಗಳ ಮಾಹಿತಿ ಪಡೆಯಿರಿ">
+       Discover government schemes and public welfare services
+    </p>
+
+    <p data-en="Gram Panchayat Digital Portal"
+       data-kn="ಗ್ರಾಮ ಪಂಚಾಯಿತಿ ಡಿಜಿಟಲ್ ಪೋರ್ಟಲ್">
+       Gram Panchayat Digital Portal
+    </p>
+
+    <div class="language-bar">
+        <button type="button" class="active" id="englishBtn"
+                onclick="setLanguage('en')">English</button>
+        <button type="button" id="kannadaBtn"
+                onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="intro">
+        <h2 data-en="Find Schemes for You"
+            data-kn="ನಿಮಗೆ ಸೂಕ್ತವಾದ ಯೋಜನೆಗಳನ್ನು ಹುಡುಕಿ">
+            Find Schemes for You
+        </h2>
+
+        <p data-en="Explore schemes for farmers, women, students, senior citizens, workers and families."
+           data-kn="ರೈತರು, ಮಹಿಳೆಯರು, ವಿದ್ಯಾರ್ಥಿಗಳು, ಹಿರಿಯ ನಾಗರಿಕರು, ಕಾರ್ಮಿಕರು ಮತ್ತು ಕುಟುಂಬಗಳಿಗೆ ಸಂಬಂಧಿಸಿದ ಯೋಜನೆಗಳನ್ನು ಹುಡುಕಿ.">
+           Explore schemes for farmers, women, students, senior citizens, workers and families.
+        </p>
+
+        <div class="search-area">
+            <input type="search" id="schemeSearch"
+                   placeholder="Search schemes or categories..."
+                   aria-label="Search schemes"
+                   oninput="filterSchemes()">
+
+            <select id="categoryFilter"
+                    aria-label="Filter by category"
+                    onchange="filterSchemes()">
+                <option value="all">All Categories</option>
+                <option value="agriculture">Agriculture & Rural</option>
+                <option value="banking">Banking & Insurance</option>
+                <option value="business">Business & Entrepreneurship</option>
+                <option value="education">Education & Scholarships</option>
+                <option value="health">Health & Wellness</option>
+                <option value="housing">Housing</option>
+                <option value="safety">Public Safety & Justice</option>
+                <option value="technology">Science & Technology</option>
+                <option value="employment">Skills & Employment</option>
+                <option value="social">Social Welfare & Pension</option>
+                <option value="sports">Sports & Culture</option>
+                <option value="transport">Transport & Infrastructure</option>
+                <option value="tourism">Travel & Tourism</option>
+                <option value="utilities">Utilities & Sanitation</option>
+                <option value="women">Women & Child Welfare</option>
+            </select>
+        </div>
+
+        <p id="resultCount" aria-live="polite">
+            Showing all categories
+        </p>
+    </section>
+
+    <h2 class="section-title"
+        data-en="Explore Scheme Categories"
+        data-kn="ಯೋಜನೆಗಳ ವಿಭಾಗಗಳು">
+        Explore Scheme Categories
+    </h2>
+
+    <section class="scheme-grid" id="schemeGrid">
+
+        <article class="scheme-card" data-category="agriculture">
+            <span class="category-tag">🌾 Agriculture</span>
+            <h3 data-en="Farmers & Agriculture"
+                data-kn="ರೈತರು ಮತ್ತು ಕೃಷಿ">Farmers & Agriculture</h3>
+            <p data-en="Information about farmer assistance, crop support, irrigation and agricultural services."
+               data-kn="ರೈತರ ನೆರವು, ಬೆಳೆ ಸಹಾಯ, ನೀರಾವರಿ ಮತ್ತು ಕೃಷಿ ಸೇವೆಗಳ ಮಾಹಿತಿ.">
+               Information about farmer assistance, crop support, irrigation and agricultural services.
+            </p>
+            <p class="details" data-en="Check eligibility, benefits and required documents on the official scheme portal."
+               data-kn="ಅರ್ಹತೆ, ಪ್ರಯೋಜನಗಳು ಮತ್ತು ಅಗತ್ಯ ದಾಖಲೆಗಳನ್ನು ಅಧಿಕೃತ ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಪರಿಶೀಲಿಸಿ.">
+               Check eligibility, benefits and required documents on the official scheme portal.
+            </p>
+            <a class="btn category-link" href="https://www.myscheme.gov.in/"
+               target="_blank" rel="noopener">Find Schemes</a>
+        </article>
+
+        <article class="scheme-card" data-category="banking">
+            <span class="category-tag">🏦 Banking</span>
+            <h3 data-en="Banking, Loans & Insurance"
+                data-kn="ಬ್ಯಾಂಕಿಂಗ್, ಸಾಲ ಮತ್ತು ವಿಮೆ">Banking, Loans & Insurance</h3>
+            <p data-en="Explore financial inclusion, insurance, pension and eligible loan-related schemes."
+               data-kn="ಹಣಕಾಸು ಸೇವೆಗಳು, ವಿಮೆ, ಪಿಂಚಣಿ ಮತ್ತು ಅರ್ಹ ಸಾಲ ಯೋಜನೆಗಳ ಮಾಹಿತಿ.">
+               Explore financial inclusion, insurance, pension and eligible loan-related schemes.
+            </p>
+            <p class="details" data-en="Conditions and benefits depend on each scheme."
+               data-kn="ಪ್ರತಿ ಯೋಜನೆಯ ನಿಯಮಗಳು ಮತ್ತು ಪ್ರಯೋಜನಗಳು ಬೇರೆಬೇರೆಯಾಗಿರುತ್ತವೆ.">
+               Conditions and benefits depend on each scheme.
+            </p>
+            <a class="btn category-link" href="https://www.myscheme.gov.in/"
+               target="_blank" rel="noopener">Find Schemes</a>
+        </article>
+
+        <article class="scheme-card" data-category="business">
+            <span class="category-tag">💼 Business</span>
+            <h3 data-en="Business & Self-Employment"
+                data-kn="ವ್ಯವಹಾರ ಮತ್ತು ಸ್ವಯಂ ಉದ್ಯೋಗ">Business & Self-Employment</h3>
+            <p data-en="Explore support for entrepreneurs, small businesses and self-employment."
+               data-kn="ಉದ್ಯಮಿಗಳು, ಸಣ್ಣ ವ್ಯಾಪಾರಗಳು ಮತ್ತು ಸ್ವಯಂ ಉದ್ಯೋಗಕ್ಕೆ ಸಂಬಂಧಿಸಿದ ನೆರವು.">
+               Explore support for entrepreneurs, small businesses and self-employment.
+            </p>
+            <p class="details" data-en="Check scheme-specific eligibility before applying."
+               data-kn="ಅರ್ಜಿ ಸಲ್ಲಿಸುವ ಮೊದಲು ಯೋಜನೆಯ ಅರ್ಹತೆಯನ್ನು ಪರಿಶೀಲಿಸಿ.">
+               Check scheme-specific eligibility before applying.
+            </p>
+            <a class="btn category-link" href="https://www.myscheme.gov.in/"
+               target="_blank" rel="noopener">Find Schemes</a>
+        </article>
+
+        <article class="scheme-card" data-category="education">
+            <span class="category-tag">🎓 Education</span>
+            <h3 data-en="Students & Scholarships"
+                data-kn="ವಿದ್ಯಾರ್ಥಿಗಳು ಮತ್ತು ವಿದ್ಯಾರ್ಥಿವೇತನ">Students & Scholarships</h3>
+            <p data-en="Find scholarship, education assistance, training and student welfare schemes."
+               data-kn="ವಿದ್ಯಾರ್ಥಿವೇತನ, ಶಿಕ್ಷಣ ನೆರವು, ತರಬೇತಿ ಮತ್ತು ವಿದ್ಯಾರ್ಥಿ ಕಲ್ಯಾಣ ಯೋಜನೆಗಳನ್ನು ಹುಡುಕಿ.">
+               Find scholarship, education assistance, training and student welfare schemes.
+            </p>
+            <p class="details" data-en="Scholarship rules may depend on course, income and category."
+               data-kn="ವಿದ್ಯಾರ್ಥಿವೇತನದ ನಿಯಮಗಳು ಕೋರ್ಸ್, ಆದಾಯ ಮತ್ತು ವರ್ಗವನ್ನು ಅವಲಂಬಿಸಿರಬಹುದು.">
+               Scholarship rules may depend on course, income and category.
+            </p>
+            <a class="btn category-link" href="https://scholarships.gov.in/"
+               target="_blank" rel="noopener">National Scholarship Portal</a>
+        </article>
+
+        <article class="scheme-card" data-category="health">
+            <span class="category-tag">🏥 Health</span>
+            <h3 data-en="Health & Wellness"
+                data-kn="ಆರೋಗ್ಯ ಮತ್ತು ಕ್ಷೇಮ">Health & Wellness</h3>
+            <p data-en="Explore health coverage and public healthcare programmes."
+               data-kn="ಆರೋಗ್ಯ ರಕ್ಷಣೆ ಮತ್ತು ಸಾರ್ವಜನಿಕ ಆರೋಗ್ಯ ಕಾರ್ಯಕ್ರಮಗಳ ಮಾಹಿತಿ.">
+               Explore health coverage and public healthcare programmes.
+            </p>
+            <p class="details" data-en="Check the official scheme portal for coverage and eligibility."
+               data-kn="ಆರೋಗ್ಯ ಸೌಲಭ್ಯ ಮತ್ತು ಅರ್ಹತೆಯನ್ನು ಅಧಿಕೃತ ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಪರಿಶೀಲಿಸಿ.">
+               Check the official scheme portal for coverage and eligibility.
+            </p>
+            <a class="btn category-link" href="https://pmjay.gov.in/"
+               target="_blank" rel="noopener">Ayushman Bharat PM-JAY</a>
+        </article>
+
+        <article class="scheme-card" data-category="housing">
+            <span class="category-tag">🏠 Housing</span>
+            <h3 data-en="Housing & Shelter"
+                data-kn="ವಸತಿ ಮತ್ತು ಮನೆ">Housing & Shelter</h3>
+            <p data-en="Find information about eligible rural and urban housing assistance."
+               data-kn="ಅರ್ಹ ಗ್ರಾಮೀಣ ಮತ್ತು ನಗರ ವಸತಿ ನೆರವಿನ ಮಾಹಿತಿ.">
+               Find information about eligible rural and urban housing assistance.
+            </p>
+            <p class="details" data-en="Housing assistance depends on the applicable programme and verification."
+               data-kn="ವಸತಿ ನೆರವು ಸಂಬಂಧಿತ ಯೋಜನೆ ಮತ್ತು ಪರಿಶೀಲನೆಯನ್ನು ಅವಲಂಬಿಸಿರುತ್ತದೆ.">
+               Housing assistance depends on the applicable programme and verification.
+            </p>
+            <a class="btn category-link" href="https://www.myscheme.gov.in/"
+               target="_blank" rel="noopener">Find Schemes</a>
+        </article>
+
+        <article class="scheme-card" data-category="safety">
+            <span class="category-tag">⚖️ Public Services</span>
+            <h3 data-en="Public Safety & Justice"
+                data-kn="ಸಾರ್ವಜನಿಕ ಸುರಕ್ಷತೆ ಮತ್ತು ನ್ಯಾಯ">Public Safety & Justice</h3>
+            <p data-en="Explore legal assistance, public safety and citizen service information."
+               data-kn="ಕಾನೂನು ನೆರವು, ಸಾರ್ವಜನಿಕ ಸುರಕ್ಷತೆ ಮತ್ತು ನಾಗರಿಕ ಸೇವೆಗಳ ಮಾಹಿತಿ.">
+               Explore legal assistance, public safety and citizen service information.
+            </p>
+            <a class="btn category-link" href="https://www.india.gov.in/"
+               target="_blank" rel="noopener">India Government Portal</a>
+        </article>
+
+        <article class="scheme-card" data-category="technology">
+            <span class="category-tag">💻 Technology</span>
+            <h3 data-en="Science & Technology"
+                data-kn="ವಿಜ್ಞಾನ ಮತ್ತು ತಂತ್ರಜ್ಞಾನ">Science & Technology</h3>
+            <p data-en="Explore digital services, science programmes and technology-related opportunities."
+               data-kn="ಡಿಜಿಟಲ್ ಸೇವೆಗಳು, ವಿಜ್ಞಾನ ಕಾರ್ಯಕ್ರಮಗಳು ಮತ್ತು ತಂತ್ರಜ್ಞಾನ ಸಂಬಂಧಿತ ಅವಕಾಶಗಳು.">
+               Explore digital services, science programmes and technology-related opportunities.
+            </p>
+            <a class="btn category-link" href="https://www.myscheme.gov.in/"
+               target="_blank" rel="noopener">Find Schemes</a>
+        </article>
+
+        <article class="scheme-card" data-category="employment">
+            <span class="category-tag">🧰 Employment</span>
+            <h3 data-en="Skills & Employment"
+                data-kn="ಕೌಶಲ್ಯ ಮತ್ತು ಉದ್ಯೋಗ">Skills & Employment</h3>
+            <p data-en="Find skill training, job services and employment-related programmes."
+               data-kn="ಕೌಶಲ್ಯ ತರಬೇತಿ, ಉದ್ಯೋಗ ಸೇವೆಗಳು ಮತ್ತು ಉದ್ಯೋಗ ಸಂಬಂಧಿತ ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ಹುಡುಕಿ.">
+               Find skill training, job services and employment-related programmes.
+            </p>
+            <a class="btn category-link" href="https://www.ncs.gov.in/"
+               target="_blank" rel="noopener">National Career Service</a>
+        </article>
+
+        <article class="scheme-card" data-category="social">
+            <span class="category-tag">🤝 Social Welfare</span>
+            <h3 data-en="Pensions & Social Welfare"
+                data-kn="ಪಿಂಚಣಿ ಮತ್ತು ಸಾಮಾಜಿಕ ಕಲ್ಯಾಣ">Pensions & Social Welfare</h3>
+            <p data-en="Explore eligible welfare programmes for senior citizens, persons with disabilities and other groups."
+               data-kn="ಹಿರಿಯ ನಾಗರಿಕರು, ದಿವ್ಯಾಂಗರು ಮತ್ತು ಇತರ ಅರ್ಹ ವರ್ಗಗಳ ಕಲ್ಯಾಣ ಯೋಜನೆಗಳ ಮಾಹಿತಿ.">
+               Explore eligible welfare programmes for senior citizens, persons with disabilities and other groups.
+            </p>
+            <a class="btn category-link" href="https://www.myscheme.gov.in/"
+               target="_blank" rel="noopener">Find Schemes</a>
+        </article>
+
+        <article class="scheme-card" data-category="sports">
+            <span class="category-tag">🏅 Sports & Culture</span>
+            <h3 data-en="Sports & Culture"
+                data-kn="ಕ್ರೀಡೆ ಮತ್ತು ಸಂಸ್ಕೃತಿ">Sports & Culture</h3>
+            <p data-en="Explore sports development, cultural programmes and related opportunities."
+               data-kn="ಕ್ರೀಡಾ ಅಭಿವೃದ್ಧಿ, ಸಾಂಸ್ಕೃತಿಕ ಕಾರ್ಯಕ್ರಮಗಳು ಮತ್ತು ಸಂಬಂಧಿತ ಅವಕಾಶಗಳ ಮಾಹಿತಿ.">
+               Explore sports development, cultural programmes and related opportunities.
+            </p>
+            <a class="btn category-link" href="https://www.india.gov.in/"
+               target="_blank" rel="noopener">Official Government Portal</a>
+        </article>
+
+        <article class="scheme-card" data-category="transport">
+            <span class="category-tag">🚌 Infrastructure</span>
+            <h3 data-en="Transport & Infrastructure"
+                data-kn="ಸಾರಿಗೆ ಮತ್ತು ಮೂಲಸೌಕರ್ಯ">Transport & Infrastructure</h3>
+            <p data-en="Find public transport, rural infrastructure and citizen service information."
+               data-kn="ಸಾರ್ವಜನಿಕ ಸಾರಿಗೆ, ಗ್ರಾಮೀಣ ಮೂಲಸೌಕರ್ಯ ಮತ್ತು ನಾಗರಿಕ ಸೇವೆಗಳ ಮಾಹಿತಿ.">
+               Find public transport, rural infrastructure and citizen service information.
+            </p>
+            <a class="btn category-link" href="https://www.india.gov.in/"
+               target="_blank" rel="noopener">Official Government Portal</a>
+        </article>
+
+        <article class="scheme-card" data-category="tourism">
+            <span class="category-tag">🧳 Tourism</span>
+            <h3 data-en="Travel & Tourism"
+                data-kn="ಪ್ರವಾಸ ಮತ್ತು ಪ್ರವಾಸೋದ್ಯಮ">Travel & Tourism</h3>
+            <p data-en="Explore official tourism services, programmes and public information."
+               data-kn="ಅಧಿಕೃತ ಪ್ರವಾಸೋದ್ಯಮ ಸೇವೆಗಳು, ಕಾರ್ಯಕ್ರಮಗಳು ಮತ್ತು ಸಾರ್ವಜನಿಕ ಮಾಹಿತಿಯನ್ನು ಹುಡುಕಿ.">
+               Explore official tourism services, programmes and public information.
+            </p>
+            <a class="btn category-link" href="https://www.incredibleindia.gov.in/"
+               target="_blank" rel="noopener">Incredible India</a>
+        </article>
+
+        <article class="scheme-card" data-category="utilities">
+            <span class="category-tag">🚰 Utilities</span>
+            <h3 data-en="Water, Sanitation & Utilities"
+                data-kn="ನೀರು, ಸ್ವಚ್ಛತೆ ಮತ್ತು ಮೂಲಸೇವೆಗಳು">Water, Sanitation & Utilities</h3>
+            <p data-en="Explore sanitation, drinking water and essential public utility programmes."
+               data-kn="ಸ್ವಚ್ಛತೆ, ಕುಡಿಯುವ ನೀರು ಮತ್ತು ಅಗತ್ಯ ಸಾರ್ವಜನಿಕ ಸೇವಾ ಕಾರ್ಯಕ್ರಮಗಳ ಮಾಹಿತಿ.">
+               Explore sanitation, drinking water and essential public utility programmes.
+            </p>
+            <a class="btn category-link" href="https://www.india.gov.in/"
+               target="_blank" rel="noopener">Official Government Portal</a>
+        </article>
+
+        <article class="scheme-card" data-category="women">
+            <span class="category-tag">👩‍👧 Women & Children</span>
+            <h3 data-en="Women & Child Welfare"
+                data-kn="ಮಹಿಳಾ ಮತ್ತು ಮಕ್ಕಳ ಕಲ್ಯಾಣ">Women & Child Welfare</h3>
+            <p data-en="Find information about women’s welfare, child development and family support programmes."
+               data-kn="ಮಹಿಳಾ ಕಲ್ಯಾಣ, ಮಕ್ಕಳ ಅಭಿವೃದ್ಧಿ ಮತ್ತು ಕುಟುಂಬ ನೆರವು ಕಾರ್ಯಕ್ರಮಗಳ ಮಾಹಿತಿ.">
+               Find information about women’s welfare, child development and family support programmes.
+            </p>
+            <a class="btn category-link" href="https://www.myscheme.gov.in/"
+               target="_blank" rel="noopener">Find Schemes</a>
+        </article>
+
+    </section>
+
+    <div class="no-results" id="noResults">
+        No matching category found. Try another search.
+    </div>
+
+    <section class="official-box">
+        <h2 data-en="Explore Official Government Websites"
+            data-kn="ಅಧಿಕೃತ ಸರ್ಕಾರಿ ವೆಬ್‌ಸೈಟ್‌ಗಳನ್ನು ನೋಡಿ">
+            Explore Official Government Websites
+        </h2>
+
+        <p data-en="Search central and state schemes, eligibility, benefits, documents and application instructions."
+           data-kn="ಕೇಂದ್ರ ಮತ್ತು ರಾಜ್ಯ ಯೋಜನೆಗಳು, ಅರ್ಹತೆ, ಪ್ರಯೋಜನಗಳು, ದಾಖಲೆಗಳು ಮತ್ತು ಅರ್ಜಿ ವಿಧಾನಗಳನ್ನು ಹುಡುಕಿ.">
+           Search central and state schemes, eligibility, benefits, documents and application instructions.
+        </p>
+
+        <div class="official-links">
+            <a class="btn" href="https://www.myscheme.gov.in/"
+               target="_blank" rel="noopener">myScheme — All Schemes</a>
+
+            <a class="btn" href="https://sevasindhu.karnataka.gov.in/"
+               target="_blank" rel="noopener">Karnataka Seva Sindhu</a>
+
+            <a class="btn" href="https://www.india.gov.in/"
+               target="_blank" rel="noopener">National Portal of India</a>
+
+            <a class="btn" href="https://pmkisan.gov.in/"
+               target="_blank" rel="noopener">PM-KISAN</a>
+        </div>
+    </section>
+
+    <div class="notice">
+        <strong data-en="Important information"
+                data-kn="ಮುಖ್ಯ ಮಾಹಿತಿ">Important information</strong>
+        <p data-en="This page helps citizens discover schemes. It does not confirm eligibility or guarantee benefits. Check current rules, required documents, deadlines and application links on the responsible official website."
+           data-kn="ಈ ಪುಟ ಯೋಜನೆಗಳನ್ನು ಹುಡುಕಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ. ಇದು ಅರ್ಹತೆಯನ್ನು ದೃಢೀಕರಿಸುವುದಿಲ್ಲ ಅಥವಾ ಪ್ರಯೋಜನದ ಖಾತರಿ ನೀಡುವುದಿಲ್ಲ. ಪ್ರಸ್ತುತ ನಿಯಮಗಳು, ದಾಖಲೆಗಳು, ಕೊನೆಯ ದಿನಾಂಕ ಮತ್ತು ಅರ್ಜಿ ಲಿಂಕ್‌ಗಳನ್ನು ಸಂಬಂಧಿತ ಅಧಿಕೃತ ವೆಬ್‌ಸೈಟ್‌ನಲ್ಲಿ ಪರಿಶೀಲಿಸಿ.">
+           This page helps citizens discover schemes. It does not confirm eligibility or guarantee benefits. Check current rules, required documents, deadlines and application links on the responsible official website.
+        </p>
+    </div>
+
+    <p style="text-align:center; margin-top:25px;">
+        <a href="/" data-en="← Back to Home" data-kn="← ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ">
+            ← Back to Home
+        </a>
+    </p>
+
+</main>
+
+<footer>
+    Gram Panchayat Digital Complaint Portal
+</footer>
+
+<script>
+    function setLanguage(language) {
+        document.querySelectorAll("[data-en]").forEach(function(element) {
+            element.textContent = element.dataset[language];
+        });
+
+        document.getElementById("englishBtn").classList.toggle(
+            "active", language === "en"
+        );
+
+        document.getElementById("kannadaBtn").classList.toggle(
+            "active", language === "kn"
+        );
+
+        document.getElementById("schemeSearch").placeholder =
+            language === "kn"
+                ? "ಯೋಜನೆ ಅಥವಾ ವಿಭಾಗವನ್ನು ಹುಡುಕಿ..."
+                : "Search schemes or categories...";
+
+        updateResultCount();
+    }
+
+    function filterSchemes() {
+        const query = document.getElementById("schemeSearch")
+            .value.trim().toLowerCase();
+
+        const category = document.getElementById("categoryFilter").value;
+        const cards = document.querySelectorAll(".scheme-card");
+        let visible = 0;
+
+        cards.forEach(function(card) {
+            const text = card.innerText.toLowerCase();
+            const categoryMatch =
+                category === "all" || card.dataset.category === category;
+            const textMatch = text.includes(query);
+
+            const show = categoryMatch && textMatch;
+            card.hidden = !show;
+
+            if (show) visible++;
+        });
+
+        document.getElementById("noResults").style.display =
+            visible === 0 ? "block" : "none";
+
+        updateResultCount(visible);
+    }
+
+    function updateResultCount(count) {
+        const language = document.getElementById("kannadaBtn")
+            .classList.contains("active") ? "kn" : "en";
+
+        if (count === undefined) {
+            count = [...document.querySelectorAll(".scheme-card")]
+                .filter(card => !card.hidden).length;
+        }
+
+        document.getElementById("resultCount").textContent =
+            language === "kn"
+                ? "ತೋರಿಸುತ್ತಿರುವ ವಿಭಾಗಗಳು: " + count
+                : "Showing categories: " + count;
+    }
+
+    document.querySelectorAll(".category-link").forEach(function(link) {
+        link.addEventListener("click", function() {
+            // Links open the official scheme discovery portal.
+        });
+    });
+
+    filterSchemes();
+</script>
+
+</body>
+</html>

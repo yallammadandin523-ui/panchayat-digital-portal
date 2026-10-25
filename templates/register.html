@@ -1,0 +1,813 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register Complaint | Gram Panchayat</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --green: #087f5b;
+    --dark: #064e3b;
+    --light: #effaf4;
+    --blue: #0b7285;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f7f3;
+    color: #244238;
+    min-height: 100vh;
+}
+
+/* HEADER */
+
+header {
+    background: white;
+    padding: 17px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 3px 15px #0000000c;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    font-size: 36px;
+}
+
+.brand h2 {
+    color: var(--dark);
+    font-size: 21px;
+}
+
+.brand p {
+    color: #6a8176;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.home-link {
+    color: var(--green);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 11px 16px;
+    border: 1px solid #cce8d9;
+    border-radius: 8px;
+}
+
+/* MAIN LAYOUT */
+
+.page {
+    max-width: 1450px;
+    margin: 32px auto;
+    padding: 0 25px;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 28px;
+    align-items: stretch;
+}
+
+/* IMAGE SLIDER */
+
+.visual-panel {
+    min-height: 750px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+    background: #064e3b;
+    box-shadow: 0 12px 35px #123d2b18;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.8s ease;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(2, 35, 27, 0.96),
+        rgba(2, 50, 38, 0.38) 65%,
+        rgba(2, 35, 27, 0.08)
+    );
+}
+
+.slide-one {
+    background-image: url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1100&q=85");
+}
+
+.slide-two {
+    background-image: url("https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1100&q=85");
+}
+
+.slide-three {
+    background-image: url("https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1100&q=85");
+}
+
+.visual-content {
+    position: absolute;
+    z-index: 2;
+    left: 35px;
+    right: 35px;
+    bottom: 85px;
+    color: white;
+}
+
+.badge {
+    display: inline-block;
+    background: #10a777;
+    color: white;
+    padding: 8px 13px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.visual-content h1 {
+    font-size: clamp(32px, 3.2vw, 48px);
+    line-height: 1.18;
+    margin-bottom: 17px;
+}
+
+.visual-content h1 span {
+    color: #73edb5;
+}
+
+.visual-content p {
+    color: #e2f5eb;
+    line-height: 1.8;
+    font-size: 15px;
+    max-width: 420px;
+}
+
+.visual-points {
+    margin-top: 25px;
+    display: grid;
+    gap: 13px;
+}
+
+.visual-points div {
+    font-size: 14px;
+    color: #f1fff8;
+}
+
+.slider-controls {
+    position: absolute;
+    z-index: 3;
+    bottom: 25px;
+    left: 35px;
+    right: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arrows {
+    display: flex;
+    gap: 9px;
+}
+
+.arrow {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #ffffff8c;
+    background: #ffffff20;
+    color: white;
+    font-size: 23px;
+    cursor: pointer;
+}
+
+.arrow:hover {
+    background: var(--green);
+}
+
+.dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    height: 9px;
+    width: 9px;
+    border: none;
+    border-radius: 20px;
+    background: #ffffff80;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot.active {
+    width: 26px;
+    background: #6cf0b0;
+}
+
+/* FORM */
+
+.form-panel {
+    background: white;
+    padding: 35px;
+    border-radius: 22px;
+    box-shadow: 0 12px 35px #123d2b10;
+}
+
+.form-heading {
+    margin-bottom: 26px;
+}
+
+.form-heading .small-title {
+    color: var(--green);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.form-heading h2 {
+    font-size: 31px;
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.form-heading p {
+    color: #718278;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.field {
+    margin-bottom: 18px;
+    min-width: 0;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: #2d493d;
+    margin-bottom: 8px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 13px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #263e34;
+    background: #fbfdfb;
+    border: 1px solid #d9e7de;
+    border-radius: 9px;
+    outline: none;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px #087f5b18;
+}
+
+textarea {
+    min-height: 115px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.voice-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 9px;
+}
+
+.voice-row label {
+    margin: 0;
+}
+
+.voice-tools {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.voice-tools select {
+    width: auto;
+    max-width: 155px;
+    padding: 9px;
+    font-size: 12px;
+}
+
+.voice-btn {
+    width: auto;
+    padding: 9px 12px;
+    background: #e3f7ed;
+    color: var(--green);
+    border: 1px solid #b9e6ce;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.voice-btn:hover {
+    background: #c9efdb;
+}
+
+.voice-message {
+    color: var(--blue);
+    font-size: 12px;
+    margin-top: 7px;
+    min-height: 15px;
+    line-height: 1.5;
+}
+
+.upload-box {
+    padding: 15px;
+    border: 1px dashed #a8cbbb;
+    background: #f7fcf8;
+    border-radius: 10px;
+}
+
+.upload-box input {
+    padding: 8px;
+    background: white;
+}
+
+.upload-help {
+    font-size: 12px;
+    color: #718278;
+    margin-top: 7px;
+    line-height: 1.5;
+}
+
+.submit-btn {
+    width: 100%;
+    border: none;
+    background: linear-gradient(135deg, #087f5b, #0b8d75);
+    color: white;
+    padding: 16px;
+    margin-top: 6px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 14px #087f5b24;
+    transition: 0.25s;
+}
+
+.submit-btn:hover {
+    background: var(--dark);
+    transform: translateY(-2px);
+}
+
+.privacy-note {
+    color: #72857a;
+    text-align: center;
+    font-size: 12px;
+    margin-top: 15px;
+    line-height: 1.6;
+}
+
+.back {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: var(--green);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+    .page {
+        grid-template-columns: 1fr;
+        max-width: 760px;
+    }
+
+    .visual-panel {
+        min-height: 420px;
+    }
+
+    .visual-content {
+        bottom: 75px;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 15px 5%;
+    }
+
+    .brand h2 {
+        font-size: 18px;
+    }
+
+    .page {
+        margin: 18px auto;
+        padding: 0 12px;
+        gap: 18px;
+    }
+
+    .visual-panel {
+        min-height: 410px;
+        border-radius: 15px;
+    }
+
+    .visual-content {
+        left: 22px;
+        right: 22px;
+        bottom: 80px;
+    }
+
+    .visual-content h1 {
+        font-size: 34px;
+    }
+
+    .visual-content p {
+        font-size: 13px;
+    }
+
+    .slider-controls {
+        left: 22px;
+        right: 22px;
+        bottom: 20px;
+    }
+
+    .form-panel {
+        padding: 23px 18px;
+        border-radius: 15px;
+    }
+
+    .form-heading h2 {
+        font-size: 27px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .voice-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .voice-tools {
+        width: 100%;
+    }
+
+    .voice-tools select {
+        flex: 1;
+        max-width: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        <div class="brand-icon">🏛️</div>
+        <div>
+            <h2>Gram Panchayat</h2>
+            <p>Digital Complaint Portal</p>
+        </div>
+    </div>
+
+    <a class="home-link" href="/">← Back to Home</a>
+</header>
+
+<main class="page">
+
+    <!-- LEFT IMAGE SLIDER -->
+
+    <section class="visual-panel" aria-label="Community highlights">
+
+        <div class="slide slide-one active"></div>
+        <div class="slide slide-two"></div>
+        <div class="slide slide-three"></div>
+
+        <div class="visual-content">
+            <div class="badge">🌿 YOUR VOICE MATTERS</div>
+
+            <h1 id="slideTitle">
+                Together for a<br>
+                <span>Better Village.</span>
+            </h1>
+
+            <p id="slideDescription">
+                Your concerns deserve attention. Register a complaint
+                and help make your village cleaner, safer and better.
+            </p>
+
+            <div class="visual-points">
+                <div>✓ &nbsp; Easy online complaint registration</div>
+                <div>✓ &nbsp; Track your complaint progress</div>
+                <div>✓ &nbsp; Support transparent local services</div>
+            </div>
+        </div>
+
+        <div class="slider-controls">
+            <div class="arrows">
+                <button type="button" class="arrow"
+                        onclick="changeSlide(-1)"
+                        aria-label="Previous slide">‹</button>
+
+                <button type="button" class="arrow"
+                        onclick="changeSlide(1)"
+                        aria-label="Next slide">›</button>
+            </div>
+
+            <div class="dots">
+                <button type="button" class="dot active"
+                        onclick="showSlide(0)"
+                        aria-label="Slide 1"></button>
+                <button type="button" class="dot"
+                        onclick="showSlide(1)"
+                        aria-label="Slide 2"></button>
+                <button type="button" class="dot"
+                        onclick="showSlide(2)"
+                        aria-label="Slide 3"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- RIGHT COMPLAINT FORM -->
+
+    <section class="form-panel">
+
+        <div class="form-heading">
+            <div class="small-title">We are here to help</div>
+            <h2>📝 Register Complaint</h2>
+            <p>
+                Share the details of your issue below.
+                Please provide accurate information so the Panchayat
+                can respond effectively.
+            </p>
+        </div>
+
+        <form action="/register" method="POST"
+              enctype="multipart/form-data">
+
+            <div class="form-row">
+                <div class="field">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name"
+                           placeholder="Enter your full name"
+                           autocomplete="name" required>
+                </div>
+
+                <div class="field">
+                    <label for="phone">Mobile Number *</label>
+                    <input type="tel" id="phone" name="phone"
+                           placeholder="10-digit mobile number"
+                           pattern="[0-9]{10}"
+                           maxlength="10"
+                           inputmode="numeric"
+                           autocomplete="tel"
+                           required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="field">
+                    <label for="category">Complaint Category *</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select category</option>
+                        <option value="Road">🛣️ Road</option>
+                        <option value="Water">💧 Water</option>
+                        <option value="Electricity">⚡ Electricity</option>
+                        <option value="Sanitation">🧹 Sanitation</option>
+                        <option value="Other">📌 Other</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="location">Village / Location *</label>
+                    <input type="text" id="location" name="location"
+                           placeholder="Village or area name"
+                           required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="voice-row">
+                    <label for="complaint">Complaint Description *</label>
+
+                    <div class="voice-tools">
+                        <select id="voiceLanguage"
+                                aria-label="Voice input language">
+                            <option value="kn-IN">ಕನ್ನಡ</option>
+                            <option value="en-IN">English</option>
+                        </select>
+
+                        <button type="button" id="voiceBtn"
+                                class="voice-btn"
+                                onclick="startVoiceInput()">
+                            🎤 Speak
+                        </button>
+                    </div>
+                </div>
+
+                <textarea id="complaint" name="complaint"
+                          placeholder="Describe your problem here, or use the Speak button..."
+                          required></textarea>
+
+                <p id="voiceMessage" class="voice-message"
+                   aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+                <label for="photo">Upload Complaint Photo (Optional)</label>
+                <div class="upload-box">
+                    <input type="file" id="photo" name="photo"
+                           accept="image/*">
+                    <p class="upload-help">
+                        📷 You may attach a photo showing the issue.
+                        Supported formats depend on the portal settings.
+                    </p>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Submit Complaint &nbsp; →
+            </button>
+
+            <p class="privacy-note">
+                Please check your details before submitting.
+                Keep your complaint ID for tracking.
+            </p>
+        </form>
+
+        <a class="back" href="/">← Return to Home</a>
+    </section>
+
+</main>
+
+<script>
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
+
+const slideTitle = document.getElementById("slideTitle");
+const slideDescription = document.getElementById("slideDescription");
+
+const slideTexts = [
+    {
+        title: "Together for a<br><span>Better Village.</span>",
+        description:
+            "Your concerns deserve attention. Register a complaint and help make your village cleaner, safer and better."
+    },
+    {
+        title: "Every Voice<br><span>Matters.</span>",
+        description:
+            "Report road, water, electricity and sanitation issues through a simple online process."
+    },
+    {
+        title: "Building Trust,<br><span>Creating Change.</span>",
+        description:
+            "Help your Gram Panchayat understand local needs and work towards better community services."
+    }
+];
+
+let currentSlide = 0;
+let slideTimer;
+
+function showSlide(index) {
+    slides[currentSlide].classList.remove("active");
+    dots[currentSlide].classList.remove("active");
+
+    currentSlide = (index + slides.length) % slides.length;
+
+    slides[currentSlide].classList.add("active");
+    dots[currentSlide].classList.add("active");
+
+    slideTitle.innerHTML = slideTexts[currentSlide].title;
+    slideDescription.textContent =
+        slideTexts[currentSlide].description;
+
+    restartTimer();
+}
+
+function changeSlide(direction) {
+    showSlide(currentSlide + direction);
+}
+
+function startTimer() {
+    slideTimer = setInterval(function () {
+        showSlide(currentSlide + 1);
+    }, 5000);
+}
+
+function restartTimer() {
+    clearInterval(slideTimer);
+    startTimer();
+}
+
+/* VOICE INPUT: Kannada and English */
+
+function startVoiceInput() {
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    const voiceMessage = document.getElementById("voiceMessage");
+    const voiceBtn = document.getElementById("voiceBtn");
+
+    if (!SpeechRecognition) {
+        voiceMessage.textContent =
+            "Voice input is not supported in this browser. Please try Google Chrome.";
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang =
+        document.getElementById("voiceLanguage").value;
+
+    recognition.maxAlternatives = 1;
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    voiceBtn.disabled = true;
+    voiceBtn.textContent = "🎤 Listening...";
+    voiceMessage.textContent = "Listening... Please speak now.";
+
+    recognition.onresult = function(event) {
+        const spokenText = event.results[0][0].transcript;
+        const box = document.getElementById("complaint");
+
+        box.value = box.value.trim()
+            ? box.value.trim() + " " + spokenText
+            : spokenText;
+
+        voiceMessage.textContent =
+            "Voice converted to text successfully!";
+    };
+
+    recognition.onerror = function(event) {
+        voiceMessage.textContent =
+            event.error === "not-allowed"
+            ? "Please allow microphone permission in your browser."
+            : "Voice input could not start. Please try again.";
+    };
+
+    recognition.onend = function() {
+        voiceBtn.disabled = false;
+        voiceBtn.textContent = "🎤 Speak";
+    };
+
+    try {
+        recognition.start();
+    } catch (error) {
+        voiceBtn.disabled = false;
+        voiceBtn.textContent = "🎤 Speak";
+        voiceMessage.textContent =
+            "Unable to start voice input. Please try again.";
+    }
+}
+
+startTimer();
+</script>
+
+</body>
+</html>
+```

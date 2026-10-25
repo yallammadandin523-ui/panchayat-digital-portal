@@ -1,0 +1,767 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panchayat Digital Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --green: #087f5b;
+            --dark-green: #064e3b;
+            --mint: #d8f3e6;
+            --blue: #0b7285;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4faf7;
+            color: #183b32;
+        }
+
+        /* HEADER */
+
+        header {
+            background: rgba(255,255,255,0.97);
+            padding: 17px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            box-shadow: 0 3px 18px #0000000c;
+            position: relative;
+            z-index: 5;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            font-size: 39px;
+        }
+
+        .brand h2 {
+            color: var(--dark-green);
+            font-size: 22px;
+        }
+
+        .brand p {
+            color: #547269;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        nav a {
+            color: #25473d;
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        nav a:hover {
+            background: var(--mint);
+            color: var(--green);
+        }
+
+        nav .admin-link {
+            background: var(--green);
+            color: white;
+        }
+
+        nav .admin-link:hover {
+            background: var(--dark-green);
+            color: white;
+        }
+
+        /* IMAGE SLIDER */
+
+        .slider {
+            position: relative;
+            width: 100%;
+            height: 570px;
+            overflow: hidden;
+            background: #123b31;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            padding: 55px 9%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slide::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(2, 39, 35, 0.94) 0%,
+                rgba(2, 54, 45, 0.78) 43%,
+                rgba(2, 39, 35, 0.12) 100%
+            );
+        }
+
+        .slide-1 {
+            background-image: url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2000&q=85");
+        }
+
+        .slide-2 {
+            background-image: url("https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=2000&q=85");
+        }
+
+        .slide-3 {
+            background-image: url("https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2000&q=85");
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            max-width: 610px;
+            color: white;
+        }
+
+        .eyebrow {
+            color: #8af0c3;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .slide-content h1 {
+            font-size: clamp(36px, 5vw, 62px);
+            line-height: 1.12;
+            margin-bottom: 20px;
+        }
+
+        .slide-content h1 span {
+            color: #67e8a5;
+        }
+
+        .slide-content p {
+            color: #e1f5ed;
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 28px;
+            max-width: 500px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 23px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid transparent;
+            transition: 0.25s;
+        }
+
+        .btn-primary {
+            background: #08a879;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #087f5b;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            color: white;
+            border-color: #c7eee0;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--dark-green);
+        }
+
+        .arrow {
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 46px;
+            height: 46px;
+            border: 1px solid #ffffff55;
+            border-radius: 50%;
+            background: #052f2bbd;
+            color: white;
+            font-size: 27px;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .arrow:hover {
+            background: #08a879;
+        }
+
+        .prev {
+            left: 22px;
+        }
+
+        .next {
+            right: 22px;
+        }
+
+        .dots {
+            position: absolute;
+            z-index: 3;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 11px;
+            height: 11px;
+            border: none;
+            border-radius: 50%;
+            background: #ffffff99;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #21d59b;
+            transform: scale(1.25);
+        }
+
+        /* FEATURE STRIP */
+
+        .feature-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: white;
+            padding: 32px 6%;
+            box-shadow: 0 5px 20px #00000008;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 12px 18px;
+            border-right: 1px solid #e3eee8;
+        }
+
+        .feature:last-child {
+            border-right: none;
+        }
+
+        .feature-icon {
+            font-size: 31px;
+            margin-bottom: 12px;
+        }
+
+        .feature h3 {
+            font-size: 16px;
+            color: var(--dark-green);
+            margin-bottom: 9px;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: #637a70;
+            line-height: 1.6;
+        }
+
+        /* SERVICES */
+
+        .services {
+            padding: 65px 7%;
+            text-align: center;
+        }
+
+        .section-tag {
+            color: var(--green);
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .services > h2 {
+            font-size: 34px;
+            color: var(--dark-green);
+            margin-bottom: 12px;
+        }
+
+        .section-description {
+            color: #647970;
+            line-height: 1.7;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 22px;
+            margin-top: 35px;
+            text-align: left;
+        }
+
+        .card {
+            background: white;
+            padding: 28px 23px;
+            border-radius: 15px;
+            border: 1px solid #e6f0eb;
+            box-shadow: 0 5px 22px #103e2c0a;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px #103e2c15;
+        }
+
+        .card-icon {
+            width: 55px;
+            height: 55px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: #e2f8ed;
+            font-size: 27px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            color: var(--dark-green);
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .card p {
+            color: #65796f;
+            line-height: 1.7;
+            font-size: 14px;
+            min-height: 72px;
+            margin-bottom: 18px;
+        }
+
+        .card .btn {
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+
+        .card .btn-primary {
+            background: var(--green);
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #063d30;
+            color: #d8f3e6;
+            text-align: center;
+            padding: 25px 15px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        footer p + p {
+            color: #a6cfc0;
+            font-size: 12px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            header {
+                justify-content: center;
+                text-align: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .feature-strip {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .feature:nth-child(2) {
+                border-right: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 17px 4%;
+            }
+
+            .brand h2 {
+                font-size: 18px;
+            }
+
+            .brand-icon {
+                font-size: 32px;
+            }
+
+            nav {
+                gap: 4px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .slider {
+                height: 535px;
+            }
+
+            .slide {
+                padding: 35px 27px;
+                background-position: center;
+            }
+
+            .slide::before {
+                background: rgba(2, 39, 35, 0.76);
+            }
+
+            .slide-content h1 {
+                font-size: 39px;
+            }
+
+            .slide-content p {
+                font-size: 15px;
+            }
+
+            .arrow {
+                width: 36px;
+                height: 36px;
+                font-size: 21px;
+            }
+
+            .prev {
+                left: 8px;
+            }
+
+            .next {
+                right: 8px;
+            }
+
+            .feature-strip {
+                padding: 22px 4%;
+            }
+
+            .feature {
+                padding: 12px 8px;
+            }
+
+            .feature h3 {
+                font-size: 14px;
+            }
+
+            .feature p {
+                font-size: 12px;
+            }
+
+            .services {
+                padding: 45px 5%;
+            }
+
+            .services > h2 {
+                font-size: 28px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .card p {
+                min-height: auto;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        <div class="brand-icon">🏛️</div>
+        <div>
+            <h2>Gram Panchayat</h2>
+            <p>Digital Complaint Portal</p>
+        </div>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/register">Register Complaint</a>
+        <a href="/user/login">User Login</a>
+        <a href="/track">Track Complaint</a>
+        <a href="/admin" class="admin-link">Admin Login</a>
+        <a href="/user/logout">Logout</a>
+    </nav>
+</header>
+
+<!-- IMAGE SLIDER -->
+
+<section class="slider" aria-label="Panchayat portal highlights">
+
+    <div class="slide slide-1 active">
+        <div class="slide-content">
+            <div class="eyebrow">Digital Complaint Portal</div>
+            <h1>Your Voice,<br><span>Our Priority.</span></h1>
+            <p>
+                Report your village issues online, track complaint
+                progress and connect with your Gram Panchayat easily.
+            </p>
+            <div class="buttons">
+                <a href="/register" class="btn btn-primary">
+                    Register Your Complaint →
+                </a>
+                <a href="/track" class="btn btn-outline">
+                    Track Status
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide slide-2">
+        <div class="slide-content">
+            <div class="eyebrow">Simple · Transparent · Accessible</div>
+            <h1>Every Complaint<br><span>Matters.</span></h1>
+            <p>
+                Report road, water, electricity and sanitation problems
+                in a few simple steps.
+            </p>
+            <div class="buttons">
+                <a href="/register" class="btn btn-primary">
+                    Report an Issue →
+                </a>
+                <a href="/user/login" class="btn btn-outline">
+                    User Login
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide slide-3">
+        <div class="slide-content">
+            <div class="eyebrow">Building Better Villages</div>
+            <h1>Better Services,<br><span>Better Tomorrow.</span></h1>
+            <p>
+                Stay informed about your complaint and help build
+                a cleaner, safer and stronger community.
+            </p>
+            <div class="buttons">
+                <a href="/track" class="btn btn-primary">
+                    Track Your Complaint →
+                </a>
+                <a href="{{ url_for('schemes') }}" class="btn btn-outline">
+                    Explore Schemes
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="arrow prev"
+            aria-label="Previous slide" onclick="changeSlide(-1)">‹</button>
+
+    <button type="button" class="arrow next"
+            aria-label="Next slide" onclick="changeSlide(1)">›</button>
+
+    <div class="dots" aria-label="Choose slide">
+        <button class="dot active" aria-label="Slide 1"
+                onclick="showSlide(0)"></button>
+        <button class="dot" aria-label="Slide 2"
+                onclick="showSlide(1)"></button>
+        <button class="dot" aria-label="Slide 3"
+                onclick="showSlide(2)"></button>
+    </div>
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="feature-strip">
+    <div class="feature">
+        <div class="feature-icon">📝</div>
+        <h3>Easy Registration</h3>
+        <p>Submit your complaint in a few simple steps.</p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">🔍</div>
+        <h3>Complaint Tracking</h3>
+        <p>Check your complaint status anytime.</p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">🛡️</div>
+        <h3>Accountability</h3>
+        <p>Support transparent handling of complaints.</p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">🤝</div>
+        <h3>Stronger Community</h3>
+        <p>Work together for a cleaner, safer village.</p>
+    </div>
+</section>
+
+<!-- SERVICES -->
+
+<section class="services">
+    <div class="section-tag">What You Can Do</div>
+    <h2>Our Services</h2>
+    <p class="section-description">
+        Access essential Gram Panchayat portal services online
+        with a simple and user-friendly experience.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="card-icon">📝</div>
+            <h3>Register Complaint</h3>
+            <p>
+                Report road, water, electricity and sanitation
+                issues directly to the Panchayat.
+            </p>
+            <a href="/register" class="btn btn-primary">Register Now →</a>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🔎</div>
+            <h3>Track Status</h3>
+            <p>
+                Check the current progress of your registered
+                complaint using the tracking page.
+            </p>
+            <a href="/track" class="btn btn-primary">Track Now →</a>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">📢</div>
+            <h3>Notices & Schemes</h3>
+            <p>
+                Explore village announcements and available
+                scheme information.
+            </p>
+            <a href="{{ url_for('schemes') }}" class="btn btn-primary">
+                Explore →
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🏛️</div>
+            <h3>Admin Portal</h3>
+            <p>
+                Authorized administrators can review complaints
+                and update their status.
+            </p>
+            <a href="/admin" class="btn btn-primary">Admin Login →</a>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Gram Panchayat Digital Complaint Portal</p>
+    <p>Working together for better village services.</p>
+</footer>
+
+<script>
+    const slides = document.querySelectorAll(".slide");
+    const dots = document.querySelectorAll(".dot");
+
+    let currentSlide = 0;
+    let slideTimer;
+
+    function showSlide(index) {
+        slides[currentSlide].classList.remove("active");
+        dots[currentSlide].classList.remove("active");
+
+        currentSlide = (index + slides.length) % slides.length;
+
+        slides[currentSlide].classList.add("active");
+        dots[currentSlide].classList.add("active");
+        restartTimer();
+    }
+
+    function changeSlide(direction) {
+        showSlide(currentSlide + direction);
+    }
+
+    function startTimer() {
+        slideTimer = setInterval(function () {
+            showSlide(currentSlide + 1);
+        }, 5000);
+    }
+
+    function restartTimer() {
+        clearInterval(slideTimer);
+        startTimer();
+    }
+
+    startTimer();
+</script>
+
+</body>
+</html>
+```

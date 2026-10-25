@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #087f5b, #0b7285);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 320px;
+            max-width: 85%;
+            box-shadow: 0 8px 25px #0002;
+        }
+        h2 { text-align: center; color: #087f5b; }
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin: 9px 0;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #087f5b;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+        p { text-align: center; }
+        a { color: #087f5b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>User Registration</h2>
+
+        <form action="/user/register" method="POST">
+            <input type="text" name="name"
+                   placeholder="Full Name" required>
+
+            <input type="tel" name="phone"
+                   placeholder="Phone Number"
+                   pattern="[0-9]{10}"
+                   maxlength="10" required>
+
+            <input type="password" name="password"
+                   placeholder="Create Password"
+                   minlength="8" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already registered?
+            <a href="/user/login">Login here</a>
+        </p>
+    </div>
+</body>
+</html>

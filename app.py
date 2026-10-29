@@ -97,12 +97,13 @@ def user_register():
 
 def get_db_connection():
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="yallu",
-        database="panchayat_portal"
+        host=os.environ.get("DB_HOST"),
+        port=int(os.environ.get("DB_PORT", "3306")),
+        user=os.environ.get("DB_USER"),
+        password=os.environ.get("DB_PASSWORD"),
+        database=os.environ.get("DB_NAME", "defaultdb"),
+        ssl_disabled=False
     )
-
 
 
 @app.route("/")
